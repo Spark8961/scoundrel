@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "type": "module",
     "scripts": {
-        "dev": "tsx engine/index.ts"
+        "dev": "tsx cli/index.ts"
     },
     "devDependencies": {
         "@types/node": "^24.10.1",
