@@ -7,8 +7,8 @@ export const render = (state: GameState) => {
     layout += `Weapon: ${!state.player.weapon ? "None" : state.player.weapon.toString()}\n`;
     layout += `Deck: ${state.deck.length} cards remaining.\n`;
     layout += `Room: \n`;
-    state.room.forEach((card, i) => {
-        layout += `${i++}: ${getCardFace(card)}${getCardSuit(card)}\n`;
+    state.room.cards.forEach((card, i) => {
+        layout += `${i + 1}: ${getCardFace(card)}${getCardSuit(card)}\n`;
     });
     layout += `Last: ${state.lastMessage ?? "-"} \n`;
     layout += `Actions:\n[1-4]: Play Card\ns: Skip Room\nq: Quit Game\n`;

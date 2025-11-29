@@ -8,7 +8,7 @@ export type Card = {
 };
 
 export type Deck = Card[];
-export type Room = Card[];
+export type Room = { cards: Card[]; canHeal: boolean };
 export type Discard = Card[];
 
 type Player = {
@@ -25,4 +25,4 @@ export type GameState = {
     lastMessage: string | null;
 };
 
-export type GameAction = { type: "use_card"; index: number } | { type: "skip_room" } | { type: "quit_game" };
+export type GameAction = { type: "use_card"; index: number } | { type: "skip_room" } | { type: "quit_game" } | { type: "invalid_input" };

@@ -5,7 +5,7 @@ export const parseInput = (answer: string): GameAction => {
     if (command === "q") return { type: "quit_game" };
     if (command === "s") return { type: "skip_room" };
 
-    let index = Number(command);
-    if (isNaN(index) || (index < 0 && index > 3)) throw new Error("Invalid Command.");
-    return { type: "use_card", index: index-- };
+    let index = Number(command) - 1;
+    if (isNaN(index) || (index < 0 && index > 3)) return { type: "invalid_input" };
+    return { type: "use_card", index: index };
 };
