@@ -1,5 +1,5 @@
 import { createDeck, shuffle } from "./deck.js";
-import type { Deck, GameAction, GameState } from "./types.js";
+import type { Deck, GameAction, GameState, Weapon } from "./types.js";
 
 const drawRoom = (deck: Deck, isNewRoom: boolean = true) => {
     const cardsToDraw = isNewRoom ? 4 : 3;
@@ -37,7 +37,10 @@ export const update = (state: GameState, action: GameAction) => {
     if (action.type === "use_card") {
         const index = action.index;
         const card = nextState.room.cards[index];
-        if (!card) nextState.lastMessage = "That slot is empty";
+        if (!card) {
+            nextState.lastMessage = "That slot is empty";
+            return nextState;
+        }
         const suit = card.suit;
         const rank = card.rank;
 
@@ -52,7 +55,7 @@ export const update = (state: GameState, action: GameAction) => {
             nextState.lastMessage = `Healed ${nextState.player.currentHp - preHealHp} HP.`;
             nextState.room.canHeal = false;
         } else if (suit === "diamonds") {
-            const newWeapon = { rank: rank, lastHit: null };
+            const newWeapon: Weapon = { rank: rank, lastHit: null };
             nextState.player = { ...nextState.player };
             nextState.player.weapon = newWeapon;
             nextState.lastMessage = `Equipped weapon ${rank}.`;

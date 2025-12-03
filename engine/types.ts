@@ -10,7 +10,7 @@ export type Card = {
 export type Deck = Card[];
 export type Room = { cards: Card[]; canHeal: boolean };
 export type Discard = Card[];
-type Weapon = { rank: Ranks; lastHit: Ranks[] | null } | null;
+export type Weapon = { rank: Ranks; lastHit: Ranks[] | null } | null;
 
 type Player = {
     currentHp: number;
