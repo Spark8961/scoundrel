@@ -49,8 +49,13 @@ export const update = (state: GameState, action: GameAction) => {
             nextState.room = { ...nextState.room, cards: [...nextState.room.cards] };
 
             nextState.player.currentHp = Math.min(nextState.player.maxHp, nextState.player.currentHp + hpToHeal);
-            nextState.lastMessage = `Healed ${nextState.player.currentHp - preHealHp} HP`;
+            nextState.lastMessage = `Healed ${nextState.player.currentHp - preHealHp} HP.`;
             nextState.room.canHeal = false;
+        } else if (suit === "diamonds") {
+            const newWeapon = { rank: rank, lastHit: null };
+            nextState.player = { ...nextState.player };
+            nextState.player.weapon = newWeapon;
+            nextState.lastMessage = `Equipped weapon ${rank}.`;
         } else {
             nextState.lastMessage = "This Suit is not implemented.";
             nextState.room = { ...nextState.room, cards: [...nextState.room.cards] };
