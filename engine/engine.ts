@@ -24,6 +24,7 @@ export const startGame = () => {
             weapon: null,
         },
         lastMessage: null,
+        phase: "select_card",
     };
 
     return initialState;
@@ -32,7 +33,10 @@ export const startGame = () => {
 export const update = (state: GameState, action: GameAction) => {
     const nextState = { ...state };
 
-    if (action.type === "invalid_input") nextState.lastMessage = "Invalid input.";
+    if (action.type === "invalid_input") {
+        nextState.lastMessage = "Invalid input.";
+        return nextState;
+    }
 
     if (action.type === "use_card") {
         const index = action.index;
@@ -56,10 +60,17 @@ export const update = (state: GameState, action: GameAction) => {
             nextState.room.canHeal = false;
         } else if (suit === "diamonds") {
             const newWeapon: Weapon = { rank: rank, lastHit: null };
+
             nextState.player = { ...nextState.player };
+
             nextState.player.weapon = newWeapon;
             nextState.lastMessage = `Equipped weapon ${rank}.`;
         } else {
+            if (nextState.phase === "select_card") {
+                nextState.phase = { type: "choose_weapon", index };
+                nextState.lastMessage = "-";
+                return nextState;
+            }
             nextState.lastMessage = "This Suit is not implemented.";
             nextState.room = { ...nextState.room, cards: [...nextState.room.cards] };
         }
@@ -67,6 +78,5 @@ export const update = (state: GameState, action: GameAction) => {
         nextState.discard = [...nextState.discard, card];
         nextState.room.cards = nextState.room.cards.filter((_, i) => i !== index);
     }
-
     return nextState;
 };

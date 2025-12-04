@@ -13,7 +13,12 @@ export const render = (state: GameState) => {
         layout += !card ? `${i + 1}: [EMPTY]\n` : `${i + 1}: ${getCardFace(card)}${getCardSuit(card)}\n`;
     }
     layout += `Last: ${state.lastMessage ?? "-"} \n`;
-    layout += `Actions:\n[1-4]: Play Card\ns: Skip Room\nq: Quit Game\n`;
+    if (state.phase === "select_card") {
+        layout += `Actions:\n[1-4]: Play Card\ns: Skip Room\nq: Quit Game\n`;
+    } else {
+        layout += `Attack Mode:\n1: Fight Barehanded\n2: Fight with weapon\nq: Quit Game\n`;
+    }
+
     console.clear();
     process.stdout.write(layout);
 };
